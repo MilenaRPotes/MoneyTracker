@@ -16,6 +16,6 @@ namespace MoneyTracerk.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Add properties for binding here (next steps)
+        // Add properties for binding here 
     }
 }
