@@ -32,6 +32,13 @@ namespace MoneyTracker.ViewModels
             set { _amount = value; OnPropertyChanged(nameof(Amount));}
         }
 
+        private string? _category;
+        public string? Category 
+        {
+            get => _category;
+            set { _category = value; OnPropertyChanged(nameof(Category));}
+        }
+
         private DateTime _date = DateTime.Now;
         public DateTime Date 
         { 

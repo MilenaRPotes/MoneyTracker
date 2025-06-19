@@ -13,6 +13,29 @@
     </Window.DataContext>
     <Grid>
         <!--UI goes here-->
-        <TextBlock Text="MoneyTracker App" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--<TextBlock Text="MoneyTracker App" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"></TextBlock>-->
+        <TextBlock Text="Add New Expense" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"></TextBlock>
+        <StackPanel Grid.Row="1" Width="300" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock Text="Description"></TextBlock>
+            <TextBlock Text="{Binding Description, Mode=TwoWay}" Margin="0,0,0,10"></TextBlock>
+            
+            <TextBlock Text="Amount"></TextBlock>
+            <TextBlock Text="{Binding Amount, Mode=TwoWay}" Margin="0,0,0,10">
+                
+            </TextBlock>   <TextBlock Text="Category"></TextBlock>
+            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding Category, Mode=TwoWay}"  Margin="0,0,0,10"></ComboBox>
+
+            <TextBlock Text="Date"></TextBlock>
+            <DatePicker SelectedDate="{Binding Date, Mode=TwoWay}" Margin="0,0,0,20"></DatePicker>
+
+            <Button Content="Save" Width="100" HorizontalAlignment="Center"></Button>
+            
+            
+        </StackPanel>
+        
     </Grid>
 </Window>
