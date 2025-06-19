@@ -17,5 +17,28 @@ namespace MoneyTracker.ViewModels
         }
 
         // Add properties for binding here 
+        private string? _description;
+        public string? Description 
+        { 
+            get => _description; 
+            set { _description = value; OnPropertyChanged(nameof(Description));}
+        
+        }
+
+        private decimal _amount;
+        public decimal Amount 
+        {
+            get => _amount;
+            set { _amount = value; OnPropertyChanged(nameof(Amount));}
+        }
+
+        private DateTime _date = DateTime.Now;
+        public DateTime Date 
+        { 
+            get => _date;
+            set { _date = value; OnPropertyChanged(nameof(Date));}
+        }
+
+        public string[] Categories => new[] { "Food", "Transport", "Housing", "Entertainment", "Other" };
     }
 }
