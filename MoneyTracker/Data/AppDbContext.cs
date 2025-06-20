@@ -11,12 +11,16 @@ namespace MoneyTracker.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           //Local SQLite file in the same folder as the application
-            optionsBuilder.UseSqlite("Data Source=moneytracker.db");
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "moneytracker.db");
-            Console.WriteLine($"Using DB at: {path}"); // O usa Debug.WriteLine para WPF
-            optionsBuilder.UseSqlite($"Data Source={path}");
+           
+                //Local SQLite file in the same folder as the application
+                //optionsBuilder.UseSqlite("Data Source=moneytracker.db");
+                var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "moneytracker.db");
+                optionsBuilder.UseSqlite($"Data Source={dbPath}");
+           
+         
+
+            
         }
     }
 }
