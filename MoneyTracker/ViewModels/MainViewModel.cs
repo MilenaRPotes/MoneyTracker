@@ -78,6 +78,12 @@ namespace MoneyTracker.ViewModels
                 db.Expenses.Add(expense);
                 db.SaveChanges();
 
+                //Reload the table in the view opc1
+                //LoadExpenses();
+
+                //Add directly to the observable list and Insert at top to see most recent on top opc2
+                Expenses.Insert(0, expense); 
+
                 // Clear fields after saving
                 Description = string.Empty;
                 Amount = 0;
