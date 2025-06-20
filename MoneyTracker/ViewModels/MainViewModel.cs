@@ -4,7 +4,9 @@ using MoneyTracker.Models;
 using MoneyTracker.Helpers;
 using System.Windows.Input;
 using System.Windows;
-
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace MoneyTracker.ViewModels
@@ -56,6 +58,7 @@ namespace MoneyTracker.ViewModels
         public MainViewModel() 
         {
             SaveCommand = new RelayCommand(SaveExpense);
+            LoadExpenses();
         }
 
         private void SaveExpense() 
@@ -86,8 +89,21 @@ namespace MoneyTracker.ViewModels
 
                 MessageBox.Show($"Error saving expense: {ex.Message}\n{ex.InnerException?.Message}", "Database Error");
             }
-
-          
         }
+
+        public ObservableCollection<Expense> Expenses { get; set; } = new();
+
+        private void LoadExpenses() 
+        {
+            using var db = new AppDbContext();
+            var allExpenses = db.Expenses.OrderByDescending(e => e.Date).ToList();
+            Expenses.Clear();
+            foreach (var expense in allExpenses) 
+            {
+                Expenses.Add(expense);
+            }
+
+        }
+
     }
 }
