@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using MoneyTracker.Data;
+using MoneyTracker.Models;
+using MoneyTracker.Helpers;
+using System.Windows.Input;
+using System.Windows;
+
+
 
 namespace MoneyTracker.ViewModels
 {
@@ -47,5 +49,45 @@ namespace MoneyTracker.ViewModels
         }
 
         public string[] Categories => new[] { "Food", "Transport", "Housing", "Entertainment", "Other" };
+    
+    
+        public ICommand SaveCommand {  get; }
+
+        public MainViewModel() 
+        {
+            SaveCommand = new RelayCommand(SaveExpense);
+        }
+
+        private void SaveExpense() 
+        {
+            try
+            {
+                using var db = new AppDbContext();
+
+                var expense = new Expense
+                {
+                    Description = this.Description,
+                    Amount = this.Amount,
+                    Category = this.Category,
+                    Date = this.Date
+                };
+
+                db.Expenses.Add(expense);
+                db.SaveChanges();
+
+                // Clear fields after saving
+                Description = string.Empty;
+                Amount = 0;
+                Category = Categories.FirstOrDefault();
+                Date = DateTime.Now;
+            }
+            catch (Exception ex) 
+            {
+
+                MessageBox.Show($"Error saving expense: {ex.Message}\n{ex.InnerException?.Message}", "Database Error");
+            }
+
+          
+        }
     }
 }
