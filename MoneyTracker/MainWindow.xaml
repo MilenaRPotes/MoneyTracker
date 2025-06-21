@@ -46,15 +46,21 @@
         <!--#endregion-->
         
         <!--#region DATAGRID Expenses-->
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" Height="200" Margin="20">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description }" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="150"></DataGridTextColumn>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}" Width="120"></DataGridTextColumn>
-            </DataGrid.Columns>
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Your Expenses" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
 
-        </DataGrid>
+            <DataGrid  ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" AlternatingRowBackground="LightGray"  Margin="0,0,0,10" VerticalScrollBarVisibility="Auto" Height="200">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description }" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="100"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="150"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}" Width="120"></DataGridTextColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </StackPanel>
+     
         <!--#endregion-->
 
 
