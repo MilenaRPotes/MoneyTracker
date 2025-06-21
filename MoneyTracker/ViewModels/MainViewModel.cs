@@ -109,6 +109,20 @@ namespace MoneyTracker.ViewModels
                 Expenses.Add(expense);
             }
 
+            TotalExpenses = allExpenses.Sum(e => e.Amount); // Current total
+
+        }
+
+        private decimal _totalExpense;
+        public decimal TotalExpenses
+        { 
+            get => _totalExpense;
+            set 
+            { 
+                _totalExpense = value;
+                OnPropertyChanged(nameof(TotalExpenses));
+            }
+
         }
 
     }
