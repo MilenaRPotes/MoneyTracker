@@ -58,7 +58,7 @@
                 </DataGrid.Columns>
 
             </DataGrid>
-
+            <TextBlock Text="" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,20,0" ></TextBlock>
         </StackPanel>
      
         <!--#endregion-->
