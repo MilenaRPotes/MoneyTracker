@@ -58,6 +58,7 @@ namespace MoneyTracker.ViewModels
         public MainViewModel() 
         {
             SaveCommand = new RelayCommand(SaveExpense);
+            DeleteExpenseCommand = new RelayCommand(DeleteExpense, CanDelete);
             LoadExpenses();
         }
 
@@ -126,5 +127,35 @@ namespace MoneyTracker.ViewModels
 
         }
 
+        public ICommand DeleteExpenseCommand {  get; }
+
+        private Expense _selectedExpense;
+        public Expense SelectedExpense 
+        {
+            get => _selectedExpense;
+            set
+            {
+                _selectedExpense = value;
+                OnPropertyChanged(nameof(SelectedExpense));
+            }
+        }
+
+        private void DeleteExpense() 
+        { 
+            if( SelectedExpense == null) return;
+            
+            using var db = new AppDbContext();
+            db.Expenses.Remove(SelectedExpense);
+            db.SaveChanges();
+
+            Expenses.Remove(SelectedExpense);
+            TotalExpenses -= SelectedExpense.Amount; //Update the total 
+            SelectedExpense = null;
+        }
+
+        private bool CanDelete() 
+        { 
+            return SelectedExpense != null;
+        }
     }
 }
