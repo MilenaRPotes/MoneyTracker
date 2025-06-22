@@ -82,7 +82,8 @@ namespace MoneyTracker.ViewModels
                 //LoadExpenses();
 
                 //Add directly to the observable list and Insert at top to see most recent on top opc2
-                Expenses.Insert(0, expense); 
+                Expenses.Insert(0, expense);
+                TotalExpenses += expense.Amount; // update the total 
 
                 // Clear fields after saving
                 Description = string.Empty;
