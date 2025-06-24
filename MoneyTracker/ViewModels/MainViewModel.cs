@@ -7,6 +7,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Media;
 
 
 namespace MoneyTracker.ViewModels
@@ -127,30 +128,53 @@ namespace MoneyTracker.ViewModels
 
         }
 
-        public ICommand DeleteExpenseCommand {  get; }
+        public ICommand DeleteExpenseCommand { get; }
 
-        private Expense _selectedExpense;
-        public Expense SelectedExpense 
+        private Expense? _selectedExpense;
+        public Expense? SelectedExpense 
         {
             get => _selectedExpense;
             set
             {
                 _selectedExpense = value;
                 OnPropertyChanged(nameof(SelectedExpense));
+                (DeleteExpenseCommand as RelayCommand)?.RaiseCanExecuteChanged(); // Activate the delete button
             }
         }
 
         private void DeleteExpense() 
-        { 
-            if( SelectedExpense == null) return;
-            
-            using var db = new AppDbContext();
-            db.Expenses.Remove(SelectedExpense);
-            db.SaveChanges();
+        {
+            if (SelectedExpense == null) return;
 
-            Expenses.Remove(SelectedExpense);
-            TotalExpenses -= SelectedExpense.Amount; //Update the total 
-            SelectedExpense = null;
+
+            try 
+            {
+                using var db = new AppDbContext();
+                var expenseToDelete = db.Expenses.Find(SelectedExpense.Id);
+                if (expenseToDelete != null)
+                {
+                    db.Expenses.Remove(expenseToDelete);
+                    db.SaveChanges();
+
+                    //Remove from the visible list in the UI 
+                    Expenses.Remove(SelectedExpense);
+
+                    //Update the total 
+                    TotalExpenses -= expenseToDelete.Amount;
+
+                    //Clear the selection 
+                    SelectedExpense = null;
+
+                }
+                else
+                {
+                    MessageBox.Show("Expense not found in the database.", "Delete Error");
+                }
+            } catch (Exception ex) 
+            {
+                MessageBox.Show($"Error deleting expense: {ex.Message}\n{ex.InnerException?.Message}", "Database Error");
+            }
+           
         }
 
         private bool CanDelete() 
