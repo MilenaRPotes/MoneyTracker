@@ -5,9 +5,6 @@ using MoneyTracker.Helpers;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Media;
 
 
 namespace MoneyTracker.ViewModels
@@ -60,11 +57,33 @@ namespace MoneyTracker.ViewModels
         {
             SaveCommand = new RelayCommand(SaveExpense);
             DeleteExpenseCommand = new RelayCommand(DeleteExpense, CanDelete);
+            Category = Categories.FirstOrDefault();
+
             LoadExpenses();
         }
 
         private void SaveExpense() 
         {
+            //Validating fields before saving 
+            if (string.IsNullOrWhiteSpace(Description)) 
+            {
+                DialogService.ShowMessage("Validation Error", "Please enter a description.");
+                return;
+            }
+
+            if (Amount <= 0) 
+            {
+                DialogService.ShowMessage("Validation Error", "Amount must be greater than zero.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Category)) 
+            {
+                DialogService.ShowMessage("Validation Error", "Please select a category");
+                return;
+            }
+
+
             try
             {
                 using var db = new AppDbContext();
@@ -90,7 +109,7 @@ namespace MoneyTracker.ViewModels
                 // Clear fields after saving
                 Description = string.Empty;
                 Amount = 0;
-                Category = Categories.FirstOrDefault();
+                Category = Categories.FirstOrDefault() ?? "Other";
                 Date = DateTime.Now;
             }
             catch (Exception ex) 
@@ -146,6 +165,13 @@ namespace MoneyTracker.ViewModels
         {
             if (SelectedExpense == null) return;
 
+            //Confirmation before deleting 
+            bool confirm = DialogService.ShowConfirmation( "Are you sure you want to delete this expense?", "Delete Confirmation");
+            if (!confirm) return;
+
+            {
+                
+            }
 
             try 
             {

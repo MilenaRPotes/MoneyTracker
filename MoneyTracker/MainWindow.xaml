@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MoneyTracker.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="623" Width="800">
+        Title="MainWindow" Height="693" Width="800">
 
     <Window.DataContext>
         <vm:MainViewModel></vm:MainViewModel>
