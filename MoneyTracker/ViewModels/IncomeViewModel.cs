@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 using MoneyTracker.Data;
 using MoneyTracker.Helpers;
@@ -36,6 +30,13 @@ namespace MoneyTracker.ViewModels
             set { _amount = value; OnPropertyChanged(nameof(Amount));}
         }
 
+        private string? _source;
+        public string? Source 
+        { 
+            get => _source;
+            set { _source = value; OnPropertyChanged(nameof(Source)); }
+        }
+
         private DateTime _date = DateTime.Now;
         public DateTime Date 
         {
@@ -53,11 +54,28 @@ namespace MoneyTracker.ViewModels
         
         }
 
-        public ICommand SaveIncomeCommand { get; }
+        private Income? _selectedIncome;
+        public Income? SelectedIncome
+        {
+            get => _selectedIncome;
+            set 
+            { 
+                _selectedIncome = value; 
+                OnPropertyChanged(nameof(SelectedIncome));
+                (DeleteIncomeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
+        }
 
+
+        public string[] Sources => new[] { "Job", "Freelance", "Gift", "Sale", "Rental", "Other" };
+
+        public ICommand SaveIncomeCommand { get; }
+        public ICommand DeleteIncomeCommand { get; }
         public IncomeViewModel() 
         {
             SaveIncomeCommand = new RelayCommand(SaveIncome);
+            DeleteIncomeCommand = new RelayCommand(DeleteIncome, CanDelete);
+            Source = Sources.FirstOrDefault();
             LoadIncomes();
         }
 
@@ -67,6 +85,12 @@ namespace MoneyTracker.ViewModels
             {
                 DialogService.ShowMessage("Description is required.", "Validation Error");
                 return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Source))
+            {
+                DialogService.ShowMessage("Source is required.", "Validation Error");
+                return ;
             }
             if (Amount <= 0) 
             {
@@ -82,6 +106,7 @@ namespace MoneyTracker.ViewModels
                 {
                     Description = this.Description,
                     Amount = this.Amount,
+                    Source = this.Source,
                     Date = this.Date,
                 };
 
@@ -91,7 +116,9 @@ namespace MoneyTracker.ViewModels
                 Incomes.Insert(0, income);
                 TotalIncome += income.Amount;
 
+                //Clear fields
                 Description = string.Empty;
+                Source = Sources.FirstOrDefault();
                 Amount = 0;
                 Date = DateTime.Now;
 
@@ -114,5 +141,38 @@ namespace MoneyTracker.ViewModels
 
             TotalIncome = allIncomes.Sum(i => i.Amount);
         }
+
+        private void DeleteIncome() 
+        {
+            bool confirmed = DialogService.ShowConfirmation("Are you sure you want to delete this income?", "Delete confirmation");
+            if (!confirmed) return;
+
+            try 
+            {
+                using var db = new AppDbContext();
+                var incomeToDelete = db.Incomes.FirstOrDefault(i => i.Id == SelectedIncome.Id);
+
+                if(incomeToDelete != null) 
+                {
+                    db.Incomes.Remove(incomeToDelete);
+                    db.SaveChanges();
+
+                    Incomes.Remove(SelectedIncome);
+                    TotalIncome -= incomeToDelete.Amount;
+                }
+
+                SelectedIncome = null;  
+            } 
+            catch (Exception ex) 
+            {
+                DialogService.ShowMessage($"Error deleting income: {ex.Message}", "Database Error");
+            }
+        }
+
+        private bool CanDelete()
+        {
+            return SelectedIncome != null;
+        }
+
     }
 }
