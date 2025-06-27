@@ -8,24 +8,109 @@
         Title="DashboardWindow" Height="450" Width="800">
 
     <Window.DataContext>
-        <vm:DashboardViewModel></vm:DashboardViewModel>
+        <vm:DashboardViewModel />
     </Window.DataContext>
-    
-    <Grid Margin="20">
+
+    <Grid Background="#FFF5F5F5" Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"/> <!--Title-->
+            <RowDefinition Height="80"/> <!--General Summary-->
+            <RowDefinition Height="80"/> <!--Monthly Data-->
+            <RowDefinition Height="*"/> <!--Charts-->
         </Grid.RowDefinitions>
-        
-        <!-- Title -->
-        <TextBlock Text="Dashboard Summary" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"></TextBlock>
-        
-        <!--Summary Section-->
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
-            <TextBlock Text="{Binding TotalExpenses, StringFormat='Total Expenses: {0:C}'}" FontSize="18" FontWeight="SemiBold" Margin="0,10"/>
-            <TextBlock Text="{Binding TotalIncome, StringFormat='Total Income: {0:C}'}" FontSize="18" FontWeight="SemiBold" Margin="0,10"/>
-            <TextBlock Text="{Binding Balance, StringFormat='Balance: {0:C}'}" FontSize="20" FontWeight="Bold" Foreground="DarkGreen" Margin="0,20"/>
-        </StackPanel>
+
+        <!-- Título con mes actual -->
+        <TextBlock Text="{Binding CurrentMonth, StringFormat='Personal Finance Dashboard - {0}'}"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Foreground="#2C3E50"
+                   Margin="0,0,0,10"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Primera fila: resumen general -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Total Income -->
+            <Border Background="#DFF0D8" CornerRadius="10" Padding="8" Margin="5" Height="70">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Total Income" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding TotalIncome, StringFormat=' {0:C}'}" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Total Expenses -->
+            <Border Grid.Column="1" Background="#F2DEDE" CornerRadius="10" Padding="8" Margin="5" Height="70">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Total Expenses" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding TotalExpenses, StringFormat=' {0:C}'}" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Balance -->
+            <Border Grid.Column="2" Background="#D9EDF7" CornerRadius="10" Padding="8" Margin="5" Height="70">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Balance" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Balance, StringFormat=' {0:C}'}" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Segunda fila: datos del mes -->
+        <Grid Grid.Row="2" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Monthly Income -->
+            <Border Grid.Column="0" Background="#FCF8E3" CornerRadius="10" Padding="8" Margin="5" Height="70">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Monthly Income" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding MonthlyIncome, StringFormat=' {0:C}'}" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Monthly Expenses -->
+            <Border Grid.Column="1" Background="#FCF8E3" CornerRadius="10" Padding="8" Margin="5" Height="70">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Monthly Expenses" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding MonthlyExpenses, StringFormat=' {0:C}'}" FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <!-- Tercera fila: gráficas y panel derecho -->
+        <Grid Grid.Row="3" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <!-- Área para gráfica -->
+                <ColumnDefinition Width="2*"/>
+                <!-- Área para historial, consejos o estadísticas -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Placeholder para gráfica -->
+            <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="#DDD" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Income vs Expenses Chart (Pending)" 
+                               FontWeight="Bold" FontSize="14" Foreground="#666"/>
+                    <!-- Aquí irá la gráfica más adelante -->
+                </StackPanel>
+            </Border>
+
+            <!-- Panel derecho con historial o tips -->
+            <Border Grid.Column="1" Background="WhiteSmoke" CornerRadius="10" Margin="5" Padding="10" BorderBrush="#DDD" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Recent Activity / Tips" 
+                               FontWeight="Bold" FontSize="14" Foreground="#666"/>
+                    <!-- Aquí se podrá agregar historial reciente o frases útiles -->
+                </StackPanel>
+            </Border>
+        </Grid>
 
     </Grid>
 </Window>
+
