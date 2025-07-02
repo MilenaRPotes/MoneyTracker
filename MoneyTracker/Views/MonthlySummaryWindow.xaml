@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MoneyTracker.ViewModels"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         mc:Ignorable="d"
-        Title="MonthlySummaryWindow" Height="450" Width="800">
+        Title="MonthlySummaryWindow" Height="1028" Width="1564">
+
+   
     <Window.DataContext>
         <vm:MonthlySummaryViewModel></vm:MonthlySummaryViewModel>
     </Window.DataContext>
+    
 
     <Grid Margin="20"  Background="#FFF5F5F5" >
         <Grid.RowDefinitions>
@@ -16,10 +20,20 @@
             <RowDefinition Height="2*"></RowDefinition> <!-- Months table -->
             <RowDefinition Height="3*"></RowDefinition> <!--Graphics -->
         </Grid.RowDefinitions>
-        
-        <!--Title-->
-        <TextBlock Text="Monthly Summary" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"></TextBlock>
-        
+        <!--Title and Instruction-->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <TextBlock Text="Monthly Summary"
+               FontSize="24"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"/>
+            <TextBlock Text="Select a month to display the summary and charts."
+               FontSize="14"
+               Foreground="Gray"
+               HorizontalAlignment="Center"
+               Margin="0,5,0,0"/>
+        </StackPanel>
+
+
         <!--Months tables -->
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding MonthlySummaries}"
@@ -37,12 +51,94 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!--Graphics-->
-        <Border Grid.Row="2" Background="#FAFAFA" CornerRadius="10" Padding="10">
-            <TextBlock Text="{Binding SelectedMonth.MonthName, StringFormat='Details for {0}'}"
-           FontSize="16"
-           FontWeight="Bold"
-           Margin="0,0,0,10"/>
+        <!--Graphics Section-->
+        <Border Grid.Row="2" Background="#FAFAFA" CornerRadius="10" Padding="15" Margin="0,10,0,0">
+            <StackPanel>
+                <!--Header with Month-->
+                <TextBlock Text="{Binding SelectedMonth.MonthName, StringFormat='Details for {0}'}"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Margin="0,0,0,10"
+                            Foreground="#2C3E50"
+                            HorizontalAlignment="Center"/> 
+                
+                <!-- Placeholder for charts -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+
+                    <Border Background="#E3F2FD" Padding="20" CornerRadius="12" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Income vs Expenses"
+                                       FontWeight="Bold"
+                                       FontSize="16"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>  
+
+                            <lvc:CartesianChart
+                                        Series="{Binding ColumnSeries}"
+                                        XAxes="{Binding XAxes}"
+                                        YAxes="{Binding YAxes}"
+                                        Width="280"
+                                        Height="180"/>  
+                        </StackPanel>   
+                    </Border>
+
+
+                    <Border Background="#FCE4EC" Padding="20" CornerRadius="12" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Expenses by Category"
+                                       FontWeight="Bold"
+                                       FontSize="16"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,15"/>
+
+                            <lvc:PieChart   Series="{Binding ExpensePieSeries}" 
+                                            Width="360" 
+                                            Height="260"
+                                            LegendPosition="Right"
+                                            />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8F5E9" Padding="20" CornerRadius="10" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Income by Source"
+                                       FontWeight="Bold"
+                                       FontSize="16"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,15"/>  
+
+                            <lvc:PieChart   Series="{Binding IncomePieSeries}" 
+                                            Width="340" 
+                                            Height="240"
+                                            LegendPosition="Right"
+                                            />  
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <!-- KPIs Footer: Saving Rate -->
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Border Background="#FFFDE7" Padding="10" CornerRadius="8" Width="260" Height="80">
+                        <StackPanel>
+                            <TextBlock Text="Saving Rate"
+                                       FontSize="12"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding SavingRateMessage}"
+           FontSize="13"
+           FontWeight="SemiBold"
+           Foreground="{Binding SavingRateColor}"
+           TextAlignment="Center"
+           TextWrapping="Wrap"
+           HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+            </StackPanel>
+              
         </Border>
         
     </Grid>

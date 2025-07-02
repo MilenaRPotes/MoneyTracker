@@ -15,9 +15,9 @@ namespace MoneyTracker.Models
         public decimal Balance => TotalIncome - TotalExpenses;
         public string MonthName => new DateTime(Year, Month, 1).ToString("MMMM yyyy");
 
-        //public string Month {  get; set; } = string.Empty;  
-        //public decimal Income { get; set; }
-        //public decimal Expenses { get; set; }
-        //public decimal Balance => Income - Expenses;
+        public decimal SavingRate => TotalIncome > 0 ? (TotalIncome - TotalExpenses) / TotalIncome : 0;
+
+        public decimal ExpenseChangeFromLastMonth { get; set; } 
+
     }
 }
