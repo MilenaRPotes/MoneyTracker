@@ -4,12 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MoneyTracker.ViewModels"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:lvcCore="clr-namespace:LiveChartsCore;assembly=LiveChartsCore" 
+        xmlns:local="clr-namespace:MoneyTracker.Converters"
+        xmlns:conv="clr-namespace:MoneyTracker.Converters"
         mc:Ignorable="d"
-        Title="DashboardWindow" Height="450" Width="800">
+        Title="DashboardWindow"  Height="600"
+        Width="1000"
+        MinHeight="500"
+        MinWidth="800">
+    
+    <Window.Resources>
+        <local:IncomeToIconConverter x:Key="IncomeToIconConverter"/>
+      
+    </Window.Resources>
 
     <Window.DataContext>
         <vm:DashboardViewModel />
     </Window.DataContext>
+    
+    
 
     <Grid Background="#FFF5F5F5" Margin="20">
         <Grid.RowDefinitions>
@@ -83,32 +97,82 @@
                 </StackPanel>
             </Border>
         </Grid>
+        
         <!-- Tercera fila: gráficas y panel derecho -->
         <Grid Grid.Row="3" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <!-- Área para gráfica -->
-                <ColumnDefinition Width="2*"/>
-                <!-- Área para historial, consejos o estadísticas -->
+                <ColumnDefinition Width="3*" />
+                <!-- Área gráfica -->
+                <ColumnDefinition Width="2*" />
+                <!-- Área lateral -->
             </Grid.ColumnDefinitions>
 
-            <!-- Placeholder para gráfica -->
-            <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="#DDD" BorderThickness="1">
+            <!-- Gráfica -->
+            <Border Grid.Column="0"
+                    Background="White"
+                    CornerRadius="10"
+                    Margin="5"
+                    Padding="10"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    MaxHeight="350"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top">
                 <StackPanel>
-                    <TextBlock Text="Income vs Expenses Chart (Pending)" 
-                               FontWeight="Bold" FontSize="14" Foreground="#666"/>
-                    <!-- Aquí irá la gráfica más adelante -->
+                    <TextBlock Text="Income vs Expenses (by Week)"
+                       FontWeight="Bold"
+                       FontSize="14"
+                       Foreground="#333"
+                       Margin="0,0,0,10"/>
+
+                    <lvc:CartesianChart Series="{Binding WeeklySeries}"
+                                Height="250"
+                                LegendPosition="Right"
+                                XAxes="{Binding XAxes}"
+                                YAxes="{Binding YAxes}"/>
                 </StackPanel>
             </Border>
 
-            <!-- Panel derecho con historial o tips -->
-            <Border Grid.Column="1" Background="WhiteSmoke" CornerRadius="10" Margin="5" Padding="10" BorderBrush="#DDD" BorderThickness="1">
-                <StackPanel>
-                    <TextBlock Text="Recent Activity / Tips" 
-                               FontWeight="Bold" FontSize="14" Foreground="#666"/>
-                    <!-- Aquí se podrá agregar historial reciente o frases útiles -->
-                </StackPanel>
-            </Border>
+            <!-- Panel lateral -->
+            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+
+                <!-- Recent Activity -->
+                <Border Background="WhiteSmoke"
+                        CornerRadius="10"
+                        Margin="0,0,0,10"
+                        Padding="10"
+                        BorderBrush="#DDD"
+                        BorderThickness="1">    
+                    <StackPanel>
+                        <TextBlock Text="Recent Activity"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           Foreground="#666"
+                           Margin="0,0,0,5"/>
+
+                        <ItemsControl ItemsSource="{Binding RecentTransactions}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding IsIncome, Converter={StaticResource IncomeToIconConverter}}"
+                                           FontSize="14" Margin="0,0,5,0"/>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" FontWeight="Bold" FontSize="12"/>
+                                            <TextBlock Text="{Binding Description}" FontSize="12"/>
+                                            <TextBlock Text="{Binding Amount, StringFormat='Amount: {0:C}'}" FontSize="12" Foreground="#333"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- Aquí podrás agregar más secciones -->
+                <!-- Ejemplo: Tips financieros, gráfica de ahorro, etc. -->
+
+            </StackPanel>
+
         </Grid>
 
     </Grid>

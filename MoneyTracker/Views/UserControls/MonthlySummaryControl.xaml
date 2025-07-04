@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="MoneyTracker.Views.UserControls.MonthlySummaryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MoneyTracker.ViewModels"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <vm:MonthlySummaryViewModel />
+    </UserControl.DataContext>
+
+    <Grid Margin="20" Background="#FFF5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <TextBlock Text="Monthly Summary" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Text="Select a month to display the summary and charts." FontSize="14" Foreground="Gray" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Months table -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding MonthlySummaries}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" AutoGenerateColumns="False" CanUserAddRows="False" AlternatingRowBackground="LightGray" IsReadOnly="True" Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Month" Binding="{Binding MonthName}" Width="*"/>
+                <DataGridTextColumn Header="Income" Binding="{Binding TotalIncome, StringFormat={}{0:C}}" Width="*"/>
+                <DataGridTextColumn Header="Expenses" Binding="{Binding TotalExpenses, StringFormat={}{0:C}}" Width="*"/>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Balance, StringFormat={}{0:C}}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Charts -->
+        <Border Grid.Row="2" Background="#FAFAFA" CornerRadius="10" Padding="15" Margin="0,10,0,0">
+            <StackPanel>
+                <!-- Month Title -->
+                <TextBlock Text="{Binding SelectedMonth.MonthName, StringFormat='Details for {0}'}" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="#2C3E50" HorizontalAlignment="Center"/>
+
+                <!-- Chart Section -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+
+                    <!-- Income vs Expenses -->
+                    <Border Background="#E3F2FD" Padding="20" CornerRadius="12" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Income vs Expenses" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                            <lvc:CartesianChart Series="{Binding ColumnSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" Width="280" Height="180"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Expenses by Category -->
+                    <Border Background="#FCE4EC" Padding="20" CornerRadius="12" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Expenses by Category" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                            <lvc:PieChart Series="{Binding ExpensePieSeries}" Width="360" Height="260" LegendPosition="Right"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Income by Source -->
+                    <Border Background="#E8F5E9" Padding="20" CornerRadius="10" Margin="10" Width="420" Height="320">
+                        <StackPanel>
+                            <TextBlock Text="Income by Source" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                            <lvc:PieChart Series="{Binding IncomePieSeries}" Width="340" Height="240" LegendPosition="Right"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Saving Rate -->
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Border Background="#FFFDE7" Padding="10" CornerRadius="8" Width="260" Height="80">
+                        <StackPanel>
+                            <TextBlock Text="Saving Rate" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding SavingRateMessage}" FontSize="13" FontWeight="SemiBold" Foreground="{Binding SavingRateColor}" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
