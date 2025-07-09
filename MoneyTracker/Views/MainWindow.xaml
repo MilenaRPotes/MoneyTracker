@@ -15,15 +15,15 @@
         </Grid.ColumnDefinitions>
 
         <!-- Menú lateral -->
-        <StackPanel Background="#2C3E50" VerticalAlignment="Stretch">
+        <StackPanel Background="{StaticResource  SidebarBackgroundBrush}" VerticalAlignment="Stretch">
             <TextBlock Text="Money Tracker" Foreground="White" FontSize="16" Margin="10"/>
-            <Button Content="Dashboard" Margin="10" Click="Dashboard_Click" />
-            <Button Content="Income" Margin="10" Click="Income_Click" />
-            <Button Content="Expenses" Margin="10" Click="Expenses_Click" />
-            <Button Content="Monthly Summary" Margin="10" Click="Summary_Click" />
+            <Button Content="Dashboard" Style="{StaticResource SidebarButtonStyle}" Margin="10" Click="Dashboard_Click" />
+            <Button Content="Income" Style="{StaticResource SidebarButtonStyle}" Margin="10" Click="Income_Click" />
+            <Button Content="Expenses" Style="{StaticResource SidebarButtonStyle}" Margin="10" Click="Expenses_Click" />
+            <Button Content="Monthly Summary" Style="{StaticResource SidebarButtonStyle}" Margin="10" Click="Summary_Click" />
         </StackPanel>
 
         <!-- Zona de navegación -->
-        <ContentControl x:Name="MainContent" Grid.Column="1" Margin="10"/>
+        <ContentControl x:Name="MainContent"  Grid.Column="1" Margin="10"/>
     </Grid>
 </Window>

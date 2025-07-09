@@ -4,7 +4,221 @@
              xmlns:local="clr-namespace:MoneyTracker"
              StartupUri="/Views/MainWindow.xaml">
     <Application.Resources>
-      
+        
+        <!--Texts-->
+        <!--Titles-->
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <!--Texto comun-->
+        <Style x:Key="SummaryTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,20,0"/>
+        </Style>
+
+
+
+        <!-- Gradientes suaves -->
+
+        <!-- Fondo principal -->
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F0F4F8" Offset="0.0"/>
+            <GradientStop Color="#E0ECF1" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Fondo del menú lateral -->
+        <LinearGradientBrush x:Key="SidebarBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#0A3D62" Offset="0.0"/>
+            <GradientStop Color="#3C6382" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Gradiente botones principales -->
+        <LinearGradientBrush x:Key="PrimaryGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4DA8DA" Offset="0.0"/>
+            <GradientStop Color="#1E6F9F" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Gradientes de ingresos, gastos, balance y meses  -->
+        <LinearGradientBrush x:Key="IncomeGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A8E6CF" Offset="0.0"/>
+            <GradientStop Color="#D0F4DE" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ExpenseGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFB6B9" Offset="0.0"/>
+            <GradientStop Color="#FFDEE9" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BalanceGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#AEDFF7" Offset="0.0"/>
+            <GradientStop Color="#D9F0FF" Offset="1.0"/>
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="MonthlyGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF4C2" Offset="0.0"/>
+            <GradientStop Color="#FFE8A1" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Colores de texto -->
+        <SolidColorBrush x:Key="TextPrimaryColor" Color="#2E2E2E"/>
+
+        <!-- Estilo de Botones principales -->
+        <!-- Botón Save -->
+        <LinearGradientBrush x:Key="SaveGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#5CB8A8" Offset="0.0"/>
+            <GradientStop Color="#00A896" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Botón Delete -->
+        <LinearGradientBrush x:Key="DeleteGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F87171" Offset="0.0"/>
+            <GradientStop Color="#EF4444" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Estilo botón Save -->
+        <Style TargetType="Button" x:Key="SaveButton">
+            <Setter Property="Background" Value="{StaticResource SaveGradientBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.9"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Opacity" Value="0.8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Estilo botón Delete -->
+        <Style TargetType="Button" x:Key="DeleteButton">
+            <Setter Property="Background" Value="{StaticResource DeleteGradientBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.9"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Opacity" Value="0.8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Estilo para Botones del menú lateral -->
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#316B94"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#3978A8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1E5F8B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        
+        <!-- Estilo base para Cards -->
+        <Style x:Key="DashboardCardStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.15" ShadowDepth="2" BlurRadius="6"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Colores globales de selección -->
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#90CAF9"/>
+        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+
+        <!-- Estilo base para todos los DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+
+            <!-- Encabezados -->
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#E8EAF6"/>
+                        <Setter Property="Foreground" Value="#333"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#DDD"/>
+                        <Setter Property="Padding" Value="6"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fondo de la ventana principal -->
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource BackgroundGradient}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
     </Application.Resources>
 </Application>
  

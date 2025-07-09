@@ -1,0 +1,57 @@
+﻿<Window x:Class="MoneyTracker.Views.CurrencyConverterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:MoneyTracker.ViewModels"
+        mc:Ignorable="d"
+        Title="Currency Converter" Height="400" Width="450"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:CurrencyConverterViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Currency Converter" 
+                   FontSize="22" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="300">
+
+            <TextBlock Text="From Currency" />
+            <ComboBox ItemsSource="{Binding AvailableCurrencies}" 
+                      SelectedItem="{Binding Conversion.FromCurrency, Mode=TwoWay}" 
+                      Margin="0,5,0,15"/>
+
+            <TextBlock Text="To Currency" />
+            <ComboBox ItemsSource="{Binding AvailableCurrencies}" 
+                      SelectedItem="{Binding Conversion.ToCurrency, Mode=TwoWay}" 
+                      Margin="0,5,0,15"/>
+
+            <TextBlock Text="Amount" />
+            <TextBox Text="{Binding Conversion.Amount, Mode=TwoWay}" Margin="0,5,0,25"/>
+
+            <Button Content="Convert" 
+                    Command="{Binding ConvertCommand}" 
+                    Width="100" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,0,0,20"/>
+
+            <TextBlock Text="Converted Amount:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Conversion.ConvertedAmount, StringFormat={}{0:F2}}" 
+                       FontSize="18" 
+                       Foreground="DarkGreen"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+
