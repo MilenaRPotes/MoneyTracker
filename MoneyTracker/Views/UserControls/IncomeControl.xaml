@@ -47,6 +47,16 @@
         <!-- DataGrid -->
         <StackPanel Grid.Row="2">
             <TextBlock Text=" Your Income" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                <ComboBox ItemsSource="{Binding AvailableYears}" 
+              SelectedItem="{Binding SelectedYear}" 
+              Width="100" Margin="0,0,10,0" />
+
+                <ComboBox ItemsSource="{Binding AvailableMonths}" 
+              SelectedItem="{Binding SelectedMonth}" 
+                          DisplayMemberPath="MonthName"
+              Width="100" />
+            </StackPanel>
 
             <DataGrid ItemsSource="{Binding Incomes}" AutoGenerateColumns="False" CanUserAddRows="False"
                       AlternatingRowBackground="LightGray" HeadersVisibility="Column" Margin="10"
