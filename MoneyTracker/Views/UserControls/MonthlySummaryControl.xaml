@@ -29,7 +29,7 @@
         <DataGrid Grid.Row="1" ItemsSource="{Binding MonthlySummaries}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" AutoGenerateColumns="False"
               CanUserAddRows="False" AlternatingRowBackground="LightGray" IsReadOnly="True" Margin="0,0,0,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Month" Binding="{Binding MonthName}" Width="*" />
+                <DataGridTextColumn Header="Month" Binding="{Binding MonthDisplay}" Width="*" />
                 <DataGridTextColumn Header="Income" Binding="{Binding TotalIncome, StringFormat={}{0:C}}" Width="*" />
                 <DataGridTextColumn Header="Expenses" Binding="{Binding TotalExpenses, StringFormat={}{0:C}}" Width="*" />
                 <DataGridTextColumn Header="Balance" Binding="{Binding Balance, StringFormat={}{0:C}}" Width="*" />

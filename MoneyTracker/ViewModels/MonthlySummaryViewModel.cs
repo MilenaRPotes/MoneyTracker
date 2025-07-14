@@ -9,12 +9,14 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using System.Globalization;
 
 namespace MoneyTracker.ViewModels
 {
     public class MonthlySummaryViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+       
 
         protected void OnPropertyChanged(string name) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -39,7 +41,7 @@ namespace MoneyTracker.ViewModels
             public MonthlySummaryViewModel() 
             {
                 LoadMonthlySummaries();
-                SelectedMonth = MonthlySummaries.LastOrDefault();
+                SelectedMonth = MonthlySummaries.FirstOrDefault();
                 UpdateChart();
             }
 
@@ -89,7 +91,7 @@ namespace MoneyTracker.ViewModels
                 }
 
                 // Ordenar por año y mes ascendente para comparar con mes anterior
-                var orderedSummaries = summaries.OrderBy(s => s.Year).ThenBy(s => s.Month).ToList();
+                var orderedSummaries = summaries.OrderByDescending(s => s.Year).ThenByDescending(s => s.Month).ToList();
 
                 for (int i = 0; i < orderedSummaries.Count; i++)
                 {
