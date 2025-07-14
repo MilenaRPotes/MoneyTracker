@@ -207,20 +207,6 @@ namespace MoneyTracker.ViewModels
 
         public ObservableCollection<Expense> Expenses { get; set; } = new();
 
-        //private void LoadExpenses()
-        //{
-        //    using var db = new AppDbContext();
-        //    var allExpenses = db.Expenses.OrderByDescending(e => e.Date).ToList();
-        //    Expenses.Clear();
-        //    foreach (var expense in allExpenses)
-        //    {
-        //        Expenses.Add(expense);
-        //    }
-
-        //    TotalExpenses = allExpenses.Sum(e => e.Amount); // Current total
-
-        //}
-
         private void LoadExpenses()
         {
             using var db = new AppDbContext();

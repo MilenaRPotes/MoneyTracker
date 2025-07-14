@@ -7,30 +7,42 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        WindowStyle="ToolWindow"
-        Background="White"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         Height="222" Width="400"
-        Title="{Binding DialogTitle, FallbackValue=Confirm}">
-    
-    <StackPanel Margin="20">
-        <!--Title-->
-        <TextBlock x:Name="DialogTitleBlock" Text="{Binding DialogTitle}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"></TextBlock>
-       
-        <!--Message-->
-        <TextBlock x:Name="MessageText" TextWrapping="Wrap" FontSize="14" Margin="0,0,0,20" TextAlignment="Center"></TextBlock>
+        Title="{Binding DialogTitle, FallbackValue=Confirm}"
+        FontFamily="Segoe UI"
+       >
 
-        <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <!-- Confirm buttons -->
-            <StackPanel x:Name="ConfirmationButtons" Orientation="Horizontal">
-                <Button Content="Yes" Width="80" Margin="10,0" Click="Yes_Click"/>
-                <Button Content="No" Width="80" Margin="10,0" Click="No_Click"/>
-            </StackPanel>
+    <Border   BorderBrush="Black"
+    BorderThickness="1.5" CornerRadius="12" Padding="20" 
+          Background="{StaticResource BackgroundGradient}"
+            Effect="{DynamicResource DropShadowEffect}">
 
-            <!-- Info button -->
-            <StackPanel x:Name="InfoButton" Orientation="Horizontal">
-                <Button Content="OK" Width="80" Margin="10,0" Click="Ok_Click" />
+        <StackPanel >
+            <!--Title-->
+            <TextBlock x:Name="DialogTitleBlock" Text="{Binding DialogTitle}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"  Foreground="{StaticResource TextPrimaryColor}"></TextBlock>
+
+            <!--Message-->
+            <TextBlock x:Name="MessageText" TextWrapping="Wrap"  Foreground="#444"  FontSize="14" Margin="0,0,0,20" TextAlignment="Center"></TextBlock>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Confirm buttons -->
+                <StackPanel x:Name="ConfirmationButtons" Orientation="Horizontal">
+                    <Button Content="Yes" Width="80" Margin="10,0" Style="{StaticResource DialogButtonStyle}"  Click="Yes_Click"/>
+                    <Button Content="No" Width="80" Margin="10,0"  Style="{StaticResource DialogButtonStyle}" Click="No_Click"/>
+                </StackPanel>
+
+                <!-- Info button -->
+                <StackPanel x:Name="InfoButton" Orientation="Horizontal">
+                    <Button Content="OK" Width="80" Margin="10,0" Style="{StaticResource DialogButtonStyle}" Click="Ok_Click"  />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
-    </StackPanel>
+
+    </Border>
+    
+   
 </Window>

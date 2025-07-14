@@ -184,6 +184,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        
         <!-- Colores globales de selección -->
         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#90CAF9"/>
         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
@@ -213,6 +215,47 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+        <Style x:Key="DialogButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#2C3E50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                        CornerRadius="6" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#34495E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A252F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#B0BEC5"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <DropShadowEffect x:Key="DialogDropShadow"
+                  Color="Black"
+                  Opacity="0.15"
+                  ShadowDepth="2"
+                  BlurRadius="10"/>
 
         <!-- Fondo de la ventana principal -->
         <Style TargetType="Window">
