@@ -5,6 +5,7 @@ using MoneyTracker.Helpers;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace MoneyTracker.ViewModels
 {
@@ -61,6 +62,85 @@ namespace MoneyTracker.ViewModels
             LoadExpenses();
         }
 
+        //FilterExpense By Month and Year
+        private ObservableCollection<Expense> _allExpenses = new(); // Todos los gastos sin filtrar
+
+        public class MonthNameItem
+        {
+            public int MonthNumber { get; set; }
+            public string MonthName { get; set; }
+        }
+
+        public List<int> AvailableYears { get; set; } = new();
+
+        public List<MonthNameItem> AvailableMonths { get; set; } = Enumerable.Range(1,12)
+            .Select(m => new MonthNameItem 
+            { 
+                MonthNumber = m,
+                MonthName = new DateTime(1, m, 1).ToString("MMMM", CultureInfo.InvariantCulture)
+            }).ToList();
+
+        private int _selectedYear;
+        public int SelectedYear 
+        { 
+            get => _selectedYear;
+            set 
+            { 
+                _selectedYear = value;
+                OnPropertyChanged(nameof(SelectedYear));
+                FilterExpensesByMonth();
+            }
+        }
+
+        private MonthNameItem _selectedMonth;
+        public MonthNameItem SelectedMonth 
+        {
+            get => _selectedMonth;
+            set
+            {
+                _selectedMonth = value;
+                OnPropertyChanged(nameof(SelectedMonth));
+                FilterExpensesByMonth();
+            }
+        }
+
+        private void FillAvailableYears()
+        {
+            AvailableYears = _allExpenses
+                .Select(e => e.Date.Year)
+                .Distinct()
+                .OrderByDescending(y => y)
+                .ToList();
+
+            OnPropertyChanged(nameof(AvailableYears));
+
+            var currentYear = DateTime.Now.Year;
+            var currentMonth = DateTime.Now.Month;
+
+            SelectedYear = AvailableYears.Contains(currentYear) ? currentYear : AvailableYears.FirstOrDefault();
+            SelectedMonth = AvailableMonths.FirstOrDefault(m => m.MonthNumber == currentMonth)
+                            ?? AvailableMonths.FirstOrDefault();
+        }
+
+        private void FilterExpensesByMonth()
+        {
+            if (SelectedMonth == null || SelectedYear == 0)
+                return;
+
+            var filtered = _allExpenses
+                .Where(e => e.Date.Year == SelectedYear && e.Date.Month == SelectedMonth.MonthNumber)
+                .OrderByDescending(e => e.Date)
+                .ToList();
+
+            Expenses.Clear();
+            foreach (var expense in filtered)
+                Expenses.Add(expense);
+
+            TotalExpenses = filtered.Sum(e => e.Amount);
+        }
+
+
+
         private void SaveExpense()
         {
             //Validating fields before saving 
@@ -102,8 +182,15 @@ namespace MoneyTracker.ViewModels
                 //LoadExpenses();
 
                 //Add directly to the observable list and Insert at top to see most recent on top opc2
-                Expenses.Insert(0, expense);
-                TotalExpenses += expense.Amount; // update the total 
+                _allExpenses.Insert(0, expense); // Agrega el nuevo gasto a la colección completa
+
+                FillAvailableYears(); // Vuelve a llenar los años disponibles si hay uno nuevo
+
+                SelectedYear = expense.Date.Year;
+                SelectedMonth = AvailableMonths.FirstOrDefault(m => m.MonthNumber == expense.Date.Month);
+
+                FilterExpensesByMonth(); // Filtra la lista y también actualiza el total mensual
+
 
                 // Clear fields after saving
                 Description = string.Empty;
@@ -120,19 +207,31 @@ namespace MoneyTracker.ViewModels
 
         public ObservableCollection<Expense> Expenses { get; set; } = new();
 
+        //private void LoadExpenses()
+        //{
+        //    using var db = new AppDbContext();
+        //    var allExpenses = db.Expenses.OrderByDescending(e => e.Date).ToList();
+        //    Expenses.Clear();
+        //    foreach (var expense in allExpenses)
+        //    {
+        //        Expenses.Add(expense);
+        //    }
+
+        //    TotalExpenses = allExpenses.Sum(e => e.Amount); // Current total
+
+        //}
+
         private void LoadExpenses()
         {
             using var db = new AppDbContext();
-            var allExpenses = db.Expenses.OrderByDescending(e => e.Date).ToList();
-            Expenses.Clear();
-            foreach (var expense in allExpenses)
-            {
-                Expenses.Add(expense);
-            }
+            var allExpensesFromDb = db.Expenses.OrderByDescending(e => e.Date).ToList();
 
-            TotalExpenses = allExpenses.Sum(e => e.Amount); // Current total
+            _allExpenses = new ObservableCollection<Expense>(allExpensesFromDb); // Guarda todo sin filtrar
 
+            FillAvailableYears();       // Llena los años disponibles
+            FilterExpensesByMonth();    // Aplica filtro por año y mes actual
         }
+
 
         private decimal _totalExpense;
         public decimal TotalExpenses
