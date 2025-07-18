@@ -29,7 +29,9 @@ Designed to improve financial awareness and help users track their money with cl
 ## 🖥️ Technologies
 
 - 👨‍💻 C# + WPF  
-- 📐 MVVM Design Pattern  
+- 📐 MVVM Design Pattern
+- 🧩 SQLite local database with EF Core
+- 📦 Data access via LINQ and models
 - 📊 [LiveCharts2](https://lvcharts.net/)  
 - 🪟 Custom Dialogs with XAML  
 - 🌈 Gradient UI with resource dictionaries
