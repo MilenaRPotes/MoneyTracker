@@ -32,7 +32,7 @@ Designed to improve financial awareness and help users track their money with cl
 - 📐 MVVM Design Pattern
 - 🧩 SQLite local database with EF Core
 - 📦 Data access via LINQ and models
-- 📊 [LiveCharts2](https://lvcharts.net/)  
+- 📊 [LiveCharts2](https://livecharts.dev)  
 - 🪟 Custom Dialogs with XAML  
 - 🌈 Gradient UI with resource dictionaries
 
