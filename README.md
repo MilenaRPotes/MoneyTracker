@@ -59,7 +59,7 @@ This is **v1** of the Money Tracker App. More features and improvements are plan
 
 ## 📸 Preview
 
-![Dashboard Screenshot](https://tuimagen.com/moneytracker-dashboard-preview.png)
+![Dashboard Screenshot](https://github.com/MilenaRPotes/MoneyTracker/blob/main/Money%20Tracker%20Income.png)
 
 ---
 
@@ -67,6 +67,5 @@ This is **v1** of the Money Tracker App. More features and improvements are plan
 
 If you'd like to connect or explore more of my projects:
 
-- 🌐 [Portfolio](https://tuportafolio.com/)
-- 💼 [LinkedIn](https://linkedin.com/in/tuusuario/)
-- 📫 Email: tu@email.com
+- 💼 [LinkedIn](www.linkedin.com/in/milenarpotes)
+- 📫 Email: developersoftedithpotes@gmail.com
