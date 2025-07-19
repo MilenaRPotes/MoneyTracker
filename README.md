@@ -67,5 +67,5 @@ This is **v1** of the Money Tracker App. More features and improvements are plan
 
 If you'd like to connect or explore more of my projects:
 
-- 💼 [LinkedIn](www.linkedin.com/in/milenarpotes)
+- 💼 [LinkedIn](https://www.linkedin.com/in/milenarpotes/)
 - 📫 Email: developersoftedithpotes@gmail.com
