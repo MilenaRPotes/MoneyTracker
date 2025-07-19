@@ -38,6 +38,19 @@ Designed to improve financial awareness and help users track their money with cl
 
 ---
 
+## 🗃️ Database
+This project uses a local SQLite database powered by Entity Framework Core (EF Core) for structured, type-safe data access.
+
+- 🧱 Lightweight, serverless relational database (SQLite)
+
+- 🧠 EF Core handles database mapping through C# models
+
+- 💾 Local .db file automatically created alongside the app
+
+- 🔄 Supports adding, updating, deleting, and querying financial records
+
+- 📦 All data is persisted using LINQ and EF Core methods
+
 ## 📂 Version
 
 This is **v1** of the Money Tracker App. More features and improvements are planned for future releases 🚀
