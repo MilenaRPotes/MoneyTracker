@@ -1,7 +1,6 @@
 
 ## 🚧 This project is currently in development.  
-👉 Please switch to the `developer` branch 
-You can view the latest version in the [`developer branch`](https://github.com/MilenaRPotes/MoneyTracker/tree/development)
+👉 You can view the latest version in the [`developer branch`](https://github.com/MilenaRPotes/MoneyTracker/tree/development)
 
 
 ---
