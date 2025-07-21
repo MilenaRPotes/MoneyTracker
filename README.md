@@ -1,7 +1,8 @@
 
 ## 🚧 This project is currently in development.  
-👉 Please switch to the `developer` branch to view the latest code:
-git checkout developer
+👉 Please switch to the `developer` branch 
+You can view the latest version in the [`developer branch`](https://github.com/MilenaRPotes/MoneyTracker/tree/development)
+
 
 ---
 ## 🧾 Overview
