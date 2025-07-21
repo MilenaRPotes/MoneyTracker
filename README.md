@@ -1,3 +1,9 @@
+
+## 🚧 This project is currently in development.  
+👉 Please switch to the `developer` branch to view the latest code:
+git checkout developer
+
+---
 ## 🧾 Overview
 
 **Money Tracker** is a personal finance management application built with **WPF in C#** using the **MVVM architectural pattern**.  
